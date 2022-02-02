@@ -11,7 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class HelloApplication extends Application {
     MenuBar mymenu;
@@ -142,7 +143,19 @@ public class HelloApplication extends Application {
            public void handle(ActionEvent actionEvent) {
                FileChooser fileChooser = new FileChooser();
                fileChooser.setTitle("Open Resource File");
-               fileChooser.showOpenDialog(stage);
+               try {
+
+                   FileInputStream fr = new FileInputStream(fileChooser.showOpenDialog(stage));
+                   byte[] myarr = new byte[fr.available()];
+                   fr.read(myarr);
+                   String str = new String(myarr);
+                   System.out.println(str);
+                   textarea.setText(str);
+                   fr.close();
+               } catch (Exception e) {
+                   e.getMessage();
+
+               }
            }
 
        });
@@ -152,6 +165,27 @@ public class HelloApplication extends Application {
                FileChooser fileChooser = new FileChooser();
                fileChooser.setTitle("Save");
                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"));
+
+               byte[] str=textarea.getText().getBytes();
+               FileOutputStream fw = null;
+               try {
+                   fw = new FileOutputStream(fileChooser.showSaveDialog(stage));
+                   fw.write(str);
+                   fw.close();
+               } catch (Exception e) {
+                   e.getMessage();
+               }
+              /* FileWriter fw = null;
+               try {
+                   fw = new FileWriter(fileChooser.showSaveDialog(stage));
+                   fw.write(str);
+                   fw.close();
+               } catch (Exception e) {
+                   e.getMessage();
+               }*/
+
+
+
            }
        });
 
