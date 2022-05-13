@@ -4,7 +4,7 @@ pipeline{
     stage('hello')
     {
       steps{
-        git ''
+        git 'https://github.com/AmlAbdellatif/NotePad-java.git'
         sh 'ls'
       }
     }
