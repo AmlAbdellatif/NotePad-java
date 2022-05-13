@@ -1,0 +1,14 @@
+pipeline{
+    aget any
+    stages {
+    stage('hello')
+    {
+      steps{
+        git 'https://github.com/AmlAbdellatif/NotePad-java.git'
+        sh 'ls'
+      }
+    }
+    }
+
+
+}
